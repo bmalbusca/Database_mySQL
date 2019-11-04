@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS `dental_clinic`;
-CREATE DATABASE `dental_clinic`;
-USE `dental_clinic`;
+-- DROP DATABASE IF EXISTS `dental_clinic`;
+-- CREATE DATABASE `dental_clinic`;
+-- USE `dental_clinic`;
 
  -- IBAN Other option is using bigint()
  -- SALARY Maybe earns millions
@@ -52,6 +52,6 @@ CREATE TABLE nurse(
 );
 
 
-
+CREATE 
 
 
