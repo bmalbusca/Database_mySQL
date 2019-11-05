@@ -252,11 +252,3 @@ CREATE TABLE procedure_charting(
 
 
 
-
-
-
-
-
-
-
-
