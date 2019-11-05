@@ -108,7 +108,7 @@ CREATE TABLE trainee_doctor(
 CREATE TABLE supervision_report(
 	VAT varchar(14) NOT NULL,
 	data_timestamp TIMESTAMP NOT NULL,
-	description varchar(255) NOT NULL,
+	description TEXT NOT NULL,
 	evaluation SMALLINT NOT NULL CHECK (evaluation >=1 AND evaluation <=5 ),
 	PRIMARY KEY (VAT,data_timestamp),
 	FOREIGN KEY (VAT) REFERENCES trainee_doctor(VAT)
@@ -130,10 +130,10 @@ CREATE TABLE appointment(
 CREATE TABLE consultation(
 	VAT_doctor varchar(14) NOT NULL,
 	data_timestamp TIMESTAMP NOT NULL,
-	SOAP_S varchar(255) NOT NULL,
-	SOAP_O varchar(255) NOT NULL,
-	SOAP_A varchar(255) NOT NULL,
-	SOAP_P varchar(255) NOT NULL,
+	SOAP_S TEXT NOT NULL,
+	SOAP_O TEXT NOT NULL,
+	SOAP_A TEXT NOT NULL,
+	SOAP_P TEXT NOT NULL,
 	PRIMARY KEY (VAT_doctor,data_timestamp),
 	FOREIGN KEY (VAT_doctor,data_timestamp) REFERENCES appointment(VAT_doctor,data_timestamp)
 );
@@ -150,9 +150,31 @@ CREATE TABLE consultation_assistant(
 );
 
 
+CREATE TABLE procedure_radiology(
+	name varchar(50) NOT NULL,
+	file varchar(50) NOT NULL,
+	VAT_doctor varchar(14) NOT NULL,
+	data_timestamp TIMESTAMP NOT NULL,
+	PRIMARY KEY (name,file, VAT_doctor, data_timestamp),
+	FOREIGN KEY (name,VAT_doctor, data_timestamp) REFERENCES procedure_in_consultation(name,VAT_doctor, data_timestamp)
+);
 
 
 
+
+
+CREATE TABLE procedure_charting(
+	name varchar(50) NOT NULL,
+	VAT varchar(14) NOT NULL,
+	data_timestamp TIMESTAMP NOT NULL,
+	quadrant INT NOT NULL,
+	number INT NOT NULL,
+	desc varchar(255) NOT NULL, 
+	measure decimal(4,2),
+	PRIMARY KEY (name,VAT,data_timestamp,quadrant,number),
+	FOREIGN KEY (name,VAT, data_timestamp) REFERENCES procedure_in_consultation(name,VAT_doctor, data_timestamp),
+	FOREIGN KEY(quadrant,number) REFERENCES teeth(quadrant,number)
+);
 
 
 
