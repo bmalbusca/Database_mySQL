@@ -149,6 +149,65 @@ CREATE TABLE consultation_assistant(
 	FOREIGN KEY (VAT_doctor,data_timestamp) REFERENCES consultation(VAT_doctor,data_timestamp)
 );
 
+CREATE TABLE diagnostic_code(
+	ID varchar(14) NOT NULL,
+	description varchar(255) NOT NULL,
+	PRIMARY KEY (ID)
+);
+
+CREATE TABLE diagnostic_code_relation(
+	ID1 varchar(14) NOT NULL,
+	ID2 varchar(14) NOT NULL,
+	type varchar(50) NOT NULL,
+	PRIMARY KEY (ID1,ID2),
+	FOREIGN KEY (ID1) REFERENCES diagnostic_code(ID),
+	FOREIGN KEY (ID2) REFERENCES diagnostic_code(ID)
+);
+
+CREATE TABLE consultation_diagnostic(
+	VAT_doctor varchar(14) NOT NULL,
+	date_timestamp varchar(12) NOT NULL,
+	ID varchar(14) NOT NULL,
+	PRIMARY KEY (VAT_doctor,date_timestamp),
+	FOREIGN KEY (VAT_doctor) REFERENCES consultation(VAT_doctor),
+	FOREIGN KEY (date_timestamp) REFERENCES consultation(date_timestamp),
+	FOREIGN KEY (ID) REFERENCES diagnostic_code(ID)
+);
+
+CREATE TABLE medication(
+	name varchar(50) NOT NULL,
+	lab varchar(50) NOT NULL,
+	PRIMARY KEY (name,lab)
+);
+
+CREATE TABLE prescription(
+	name varchar(50) NOT NULL, 
+	lab varchar(50) NOT NULL,
+	VAT_doctor varchar(14) NOT NULL,
+	date_timestamp varchar(12) NOT NULL,
+	ID varchar(14) NOT NULL,
+	dosage varchar(255),
+	description varchar(255),
+	PRIMARY KEY (name,lab,VAT_doctor,date_timestamp,ID),
+	FOREIGN KEY (VAT_doctor,date_timestamp,ID) REFERENCES consultation_diagnostic (VAT_doctor,date_timestamp,ID),
+	FOREIGN KEY (name,lab) REFERENCES medication(name,lab)
+);
+
+CREATE TABLE procedure(
+	name varchar(50) NOT NULL,
+	type varchar(50) NOT NULL,
+	PRIMARY KEY (name)
+);
+
+CREATE TABLE procedure_in_consultation(
+	name varchar(50) NOT NULL,
+	VAT_doctor varchar(14) NOT NULL,
+	date_timestamp varchar(12) NOT NULL,
+	description varchar(255) NOT NULL,
+	PRIMARY KEY (name,VAT_doctor,date_timestamp),
+	FOREIGN KEY (name) REFERENCES procedure(name),
+	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation (VAT_doctor,date_timestamp)
+);
 
 CREATE TABLE procedure_radiology(
 	name varchar(50) NOT NULL,
@@ -159,9 +218,12 @@ CREATE TABLE procedure_radiology(
 	FOREIGN KEY (name,VAT_doctor, data_timestamp) REFERENCES procedure_in_consultation(name,VAT_doctor, data_timestamp)
 );
 
-
-
-
+CREATE TABLE teeth(
+	quadrant INT NOT NULL,
+	number INT NOT NULL,
+	name varchar(20) NOT NULL,
+	PRIMARY KEY (quadrant,number)
+);
 
 CREATE TABLE procedure_charting(
 	name varchar(50) NOT NULL,
