@@ -107,20 +107,20 @@ CREATE TABLE trainee_doctor(
 
 CREATE TABLE supervision_report(
 	VAT varchar(14) NOT NULL,
-	data_timestamp TIMESTAMP NOT NULL,
+	date_timestamp TIMESTAMP NOT NULL,
 	description TEXT NOT NULL,
 	evaluation SMALLINT NOT NULL CHECK (evaluation >=1 AND evaluation <=5 ),
-	PRIMARY KEY (VAT,data_timestamp),
+	PRIMARY KEY (VAT,date_timestamp),
 	FOREIGN KEY (VAT) REFERENCES trainee_doctor(VAT)
 );
 
 
 CREATE TABLE appointment(
 	VAT_doctor varchar(14) NOT NULL,
-	data_timestamp TIMESTAMP NOT NULL,
+	date_timestamp TIMESTAMP NOT NULL,
 	description varchar(255) NOT NULL,
 	VAT_client varchar(14) NOT NULL,
-	PRIMARY KEY (VAT_doctor, data_timestamp),
+	PRIMARY KEY (VAT_doctor, date_timestamp),
 	FOREIGN KEY (VAT_doctor) REFERENCES doctor(VAT),
 	FOREIGN KEY (VAT_client) REFERENCES client(VAT)
 );
@@ -129,24 +129,24 @@ CREATE TABLE appointment(
 
 CREATE TABLE consultation(
 	VAT_doctor varchar(14) NOT NULL,
-	data_timestamp TIMESTAMP NOT NULL,
+	date_timestamp TIMESTAMP NOT NULL,
 	SOAP_S TEXT NOT NULL,
 	SOAP_O TEXT NOT NULL,
 	SOAP_A TEXT NOT NULL,
 	SOAP_P TEXT NOT NULL,
-	PRIMARY KEY (VAT_doctor,data_timestamp),
-	FOREIGN KEY (VAT_doctor,data_timestamp) REFERENCES appointment(VAT_doctor,data_timestamp)
+	PRIMARY KEY (VAT_doctor,date_timestamp),
+	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES appointment(VAT_doctor,date_timestamp)
 );
 
 
 
 CREATE TABLE consultation_assistant(
 	VAT_doctor varchar(14) NOT NULL,
-	data_timestamp TIMESTAMP NOT NULL,
+	date_timestamp TIMESTAMP NOT NULL,
 	VAT_nurse varchar(14) NOT NULL,
-	PRIMARY KEY (VAT_doctor, data_timestamp),
+	PRIMARY KEY (VAT_doctor, date_timestamp),
 	FOREIGN KEY (VAT_nurse) REFERENCES nurse(VAT),
-	FOREIGN KEY (VAT_doctor,data_timestamp) REFERENCES consultation(VAT_doctor,data_timestamp)
+	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation(VAT_doctor,date_timestamp)
 );
 
 CREATE TABLE diagnostic_code(
@@ -160,17 +160,17 @@ CREATE TABLE diagnostic_code_relation(
 	ID2 varchar(14) NOT NULL,
 	type varchar(50) NOT NULL,
 	PRIMARY KEY (ID1,ID2),
-	FOREIGN KEY (ID1) REFERENCES diagnostic_code(ID),
-	FOREIGN KEY (ID2) REFERENCES diagnostic_code(ID)
+--	FOREIGN KEY (ID1,ID2) REFERENCES diagnostic_code(ID)	
+	CONSTRAINT fkey1  FOREIGN KEY (ID1) REFERENCES diagnostic_code(ID),
+	CONSTRAINT fkey2  FOREIGN KEY (ID2) REFERENCES diagnostic_code(ID)
 );
 
 CREATE TABLE consultation_diagnostic(
 	VAT_doctor varchar(14) NOT NULL,
-	date_timestamp varchar(12) NOT NULL,
+	date_timestamp TIMESTAMP  NOT NULL,
 	ID varchar(14) NOT NULL,
-	PRIMARY KEY (VAT_doctor,date_timestamp),
-	FOREIGN KEY (VAT_doctor) REFERENCES consultation(VAT_doctor),
-	FOREIGN KEY (date_timestamp) REFERENCES consultation(date_timestamp),
+	PRIMARY KEY (VAT_doctor,date_timestamp, ID),
+	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation(VAT_doctor,date_timestamp),
 	FOREIGN KEY (ID) REFERENCES diagnostic_code(ID)
 );
 
@@ -184,16 +184,16 @@ CREATE TABLE prescription(
 	name varchar(50) NOT NULL, 
 	lab varchar(50) NOT NULL,
 	VAT_doctor varchar(14) NOT NULL,
-	date_timestamp varchar(12) NOT NULL,
+	date_timestamp TIMESTAMP NOT NULL,
 	ID varchar(14) NOT NULL,
 	dosage varchar(255),
 	description varchar(255),
 	PRIMARY KEY (name,lab,VAT_doctor,date_timestamp,ID),
-	FOREIGN KEY (VAT_doctor,date_timestamp,ID) REFERENCES consultation_diagnostic (VAT_doctor,date_timestamp,ID),
+	FOREIGN KEY (VAT_doctor,date_timestamp, ID) REFERENCES consultation_diagnostic(VAT_doctor,date_timestamp,ID),
 	FOREIGN KEY (name,lab) REFERENCES medication(name,lab)
 );
 
-CREATE TABLE procedure(
+CREATE TABLE procedure_(
 	name varchar(50) NOT NULL,
 	type varchar(50) NOT NULL,
 	PRIMARY KEY (name)
@@ -202,20 +202,20 @@ CREATE TABLE procedure(
 CREATE TABLE procedure_in_consultation(
 	name varchar(50) NOT NULL,
 	VAT_doctor varchar(14) NOT NULL,
-	date_timestamp varchar(12) NOT NULL,
+	date_timestamp TIMESTAMP NOT NULL,
 	description varchar(255) NOT NULL,
 	PRIMARY KEY (name,VAT_doctor,date_timestamp),
-	FOREIGN KEY (name) REFERENCES procedure(name),
-	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation (VAT_doctor,date_timestamp)
+	FOREIGN KEY (name) REFERENCES procedure_(name),
+	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation(VAT_doctor,date_timestamp)
 );
 
 CREATE TABLE procedure_radiology(
 	name varchar(50) NOT NULL,
 	file varchar(50) NOT NULL,
 	VAT_doctor varchar(14) NOT NULL,
-	data_timestamp TIMESTAMP NOT NULL,
-	PRIMARY KEY (name,file, VAT_doctor, data_timestamp),
-	FOREIGN KEY (name,VAT_doctor, data_timestamp) REFERENCES procedure_in_consultation(name,VAT_doctor, data_timestamp)
+	date_timestamp TIMESTAMP NOT NULL,
+	PRIMARY KEY (name,file, VAT_doctor, date_timestamp),
+	FOREIGN KEY (name,VAT_doctor, date_timestamp) REFERENCES procedure_in_consultation(name,VAT_doctor, date_timestamp)
 );
 
 CREATE TABLE teeth(
@@ -228,13 +228,13 @@ CREATE TABLE teeth(
 CREATE TABLE procedure_charting(
 	name varchar(50) NOT NULL,
 	VAT varchar(14) NOT NULL,
-	data_timestamp TIMESTAMP NOT NULL,
+	date_timestamp TIMESTAMP NOT NULL,
 	quadrant INT NOT NULL,
 	number INT NOT NULL,
-	desc varchar(255) NOT NULL, 
+	descr varchar(255) NOT NULL, 
 	measure decimal(4,2),
-	PRIMARY KEY (name,VAT,data_timestamp,quadrant,number),
-	FOREIGN KEY (name,VAT, data_timestamp) REFERENCES procedure_in_consultation(name,VAT_doctor, data_timestamp),
+	PRIMARY KEY (name,VAT,date_timestamp,quadrant,number),
+	FOREIGN KEY (name,VAT, date_timestamp) REFERENCES procedure_in_consultation(name,VAT_doctor, date_timestamp),
 	FOREIGN KEY(quadrant,number) REFERENCES teeth(quadrant,number)
 );
 
