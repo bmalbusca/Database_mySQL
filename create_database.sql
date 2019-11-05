@@ -241,6 +241,48 @@ CREATE TABLE procedure_charting(
 
 
 
+INSERT INTO employee VALUES ('123400000','Jane Sweettooth','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013000',4000);
+INSERT INTO employee VALUES ('123400001','Steve Aoki','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013020',4000);
+INSERT INTO employee VALUES ('123400002','Peter','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013021',4000);
+
+INSERT INTO doctor VALUES ('123400000','Dentist','Is a good guy','jane@tecnico.ulisboa.pt');
+INSERT INTO doctor VALUES ('123400001','Dentist','Is a good guy 2','steve@tecnico.ulisboa.pt');
+INSERT INTO doctor VALUES ('123400002','Dentist','Is a good guy 3','peter@tecnico.ulisboa.pt');
+
+INSERT INTO client VALUES ('123456789','John','1985-02-07','Av almirante reis','Lisboa', '1000-000','Male',40);
+INSERT INTO client VALUES ('123456780','Robert','1985-03-07','Av almirante reis','Lisboa', '1000-048','Male',20);
+INSERT INTO client VALUES ('123456781','Charles','1988-03-06','Av almirante reis','Lisboa', '1000-020','Male',25);
+
+INSERT INTO appointment VALUES ('123400000','2008-01-01 00:00:01','Its a bad situation','123456789');
+INSERT INTO appointment VALUES ('123400000','2008-01-02 00:00:01','Its a not bad situation','123456780');
+
+INSERT INTO consultation VALUES ('123400000','2008-01-01 00:00:01','not ok','ok','not ok','ok');
+INSERT INTO consultation VALUES ('123400000','2008-01-02 00:00:01','ok','ok','ok','ok');
+
+INSERT INTO phone_number_client VALUES ('123456789', 910000000);
+INSERT INTO phone_number_client VALUES ('123456780', 910000001);
+
+
+INSERT INTO permanent_doctor VALUES ('123400000',5);
+INSERT INTO trainee_doctor VALUES ('123400001','123400000');
+INSERT INTO supervision_report VALUES ('123400001','2008-01-02 00:00:01','insufficient', 4);
+
+
+INSERT INTO trainee_doctor VALUES ('123400002','123400000');
+INSERT INTO supervision_report VALUES ('123400002','2008-01-02 00:00:03','good', 3);
+ 
+
+SELECT E1.name, E1.VAT, E2.name, rp.evaluation, rp.description FROM employee as E2, employee as E1 NATURAL JOIN trainee_doctor 
+			NATURAL JOIN supervision_report as rp
+			WHERE E2.VAT = trainee_doctor.supervisor AND  (rp.evaluation <3 OR rp.description  LIKE '%insufficient%')
+			ORDER BY  rp.evaluation DESC;
+	
+
+
+
+
+
+
 
 
 

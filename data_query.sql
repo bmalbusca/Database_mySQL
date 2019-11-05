@@ -18,3 +18,10 @@ INSERT INTO consultation VALUES ('123400000','2008-01-01 00:00:01','not ok','ok'
 INSERT INTO consultation VALUES ('123400001','2008-01-01 00:00:01','ok','ok','ok','ok');
 
 
+
+
+SELECT * from consultation 
+NATURAL JOIN appointment USING(VAT_doctor)
+ 
+
+
