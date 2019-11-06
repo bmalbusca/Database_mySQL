@@ -160,9 +160,10 @@ CREATE TABLE diagnostic_code_relation(
 	ID2 varchar(14) NOT NULL,
 	type varchar(50) NOT NULL,
 	PRIMARY KEY (ID1,ID2),
---	FOREIGN KEY (ID1,ID2) REFERENCES diagnostic_code(ID)	
-	CONSTRAINT fkey1  FOREIGN KEY (ID1) REFERENCES diagnostic_code(ID),
-	CONSTRAINT fkey2  FOREIGN KEY (ID2) REFERENCES diagnostic_code(ID)
+	FOREIGN KEY (ID1) REFERENCES diagnostic_code(ID),
+	FOREIGN KEY (ID2) REFERENCES diagnostic_code(ID)
+--	CONSTRAINT fkey1  FOREIGN KEY (ID1) REFERENCES diagnostic_code(ID),
+--	CONSTRAINT fkey2  FOREIGN KEY (ID2) REFERENCES diagnostic_code(ID)
 );
 
 CREATE TABLE consultation_diagnostic(
@@ -255,9 +256,11 @@ INSERT INTO client VALUES ('123456781','Charles','1988-03-06','Av almirante reis
 
 INSERT INTO appointment VALUES ('123400000','2008-01-01 00:00:01','Its a bad situation','123456789');
 INSERT INTO appointment VALUES ('123400000','2008-01-02 00:00:01','Its a not bad situation','123456780');
+INSERT INTO appointment VALUES ('123400000','2008-01-02 00:15:01','Its a not bad situation','123456780');
 
 INSERT INTO consultation VALUES ('123400000','2008-01-01 00:00:01','not ok','ok','not ok','ok');
 INSERT INTO consultation VALUES ('123400000','2008-01-02 00:00:01','ok','gingivitis','ok','ok');
+INSERT INTO consultation VALUES ('123400000','2008-01-02 00:15:01','ok','rest','ok','ok');
 
 INSERT INTO phone_number_client VALUES ('123456789', 910000000);
 INSERT INTO phone_number_client VALUES ('123456780', 910000001);
@@ -273,17 +276,14 @@ INSERT INTO supervision_report VALUES ('123400002','2008-01-02 00:00:03','good',
  
 
 
-
--- SELECT client.name, client.city, client.VAT, phone_number_client.phone from client, phone_number_client ,employee, consultation 
--- NATURAL JOIN (
---	appointment 
-		
---		WHERE appointment.VAT_client =  client.VAT   AND   WHERE cons 
---		)
-
-SELECT  MAX(appointment.date_timestamp)from client as c1, appointment
-	NATURAL JOIN client ;
-
+SELECT Cl.name, Cl.city, Cl.VAT
+FROM client as Cl
+INNER JOIN(
+		SELECT MAX(A.date_timestamp), A.VAT_client VAT
+		FROM appointment as A NATURAL JOIN consultation as C
+		WHERE C.SOAP_O LIKE '%gingivitis%' OR C.SOAP_O LIKE '%periodontitis%' 
+		GROUP BY A.VAT_client) as Filter
+ON Cl.VAT = Filter.VAT;
 
 
 
