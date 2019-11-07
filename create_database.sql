@@ -253,6 +253,7 @@ INSERT INTO doctor VALUES ('123400002','Dentist','Is a good guy 3','peter@tecnic
 INSERT INTO client VALUES ('123456789','John','1985-02-07','Av almirante reis','Lisboa', '1000-000','Male',40);
 INSERT INTO client VALUES ('123456780','Robert','1985-03-07','Av almirante reis','Lisboa', '1000-048','Male',20);
 INSERT INTO client VALUES ('123456781','Charles','1988-03-06','Av almirante reis','Lisboa', '1000-020','Male',25);
+INSERT INTO client VALUES ('123456782','LeBron','1988-03-06','Av almirante reis','Lisboa', '1000-020','Male',25);
 
 INSERT INTO appointment VALUES ('123400000','2008-01-01 00:00:15','Its a bad situation','123456789');
 INSERT INTO appointment VALUES ('123400000','2008-01-02 00:00:01','Its a not bad situation','123456780');
@@ -261,7 +262,18 @@ INSERT INTO appointment VALUES ('123400000','2008-01-03 00:15:01','Its a not bad
 INSERT INTO appointment VALUES ('123400000','2008-01-04 00:15:01','Its a not bad situation','123456780');
 INSERT INTO appointment VALUES ('123400000','2008-01-05 00:15:01','Its a not bad situation','123456780');
 INSERT INTO appointment VALUES ('123400000','2008-01-06 00:15:01','Its a not bad situation','123456780');
-INSERT INTO appointment VALUES ('123400000','2008-01-07 00:15:01','Its a not bad situation','123456780');
+
+INSERT INTO appointment VALUES ('123400000','2008-01-07 00:15:01','Its a not bad situation','123456781');
+
+INSERT INTO appointment VALUES ('123400002','2008-01-04 00:15:01','Its a not bad situation','123456789');
+INSERT INTO appointment VALUES ('123400002','2008-01-05 00:15:01','Its a not bad situation','123456780');
+INSERT INTO appointment VALUES ('123400002','2008-01-06 00:15:01','Its a not bad situation','123456780');
+INSERT INTO appointment VALUES ('123400002','2008-01-07 00:15:01','Its a not bad situation','123456781');
+
+
+
+INSERT INTO appointment VALUES ('123400000','2008-01-08 00:15:01','Its a not bad situation','123456781');
+
 
 INSERT INTO consultation VALUES ('123400000','2008-01-01 00:00:15','not ok','gingivitis','not ok','ok');
 INSERT INTO consultation VALUES ('123400000','2008-01-02 00:00:01','ok','gingivitis','ok','ok');
@@ -272,11 +284,18 @@ INSERT INTO consultation VALUES ('123400000','2008-01-05 00:15:01','ok','rest','
 INSERT INTO consultation VALUES ('123400000','2008-01-06 00:15:01','ok','rest','ok','ok');
 INSERT INTO consultation VALUES ('123400000','2008-01-07 00:15:01','ok','rest','ok','ok');
 
+INSERT INTO consultation VALUES ('123400002','2008-01-04 00:15:01','ok','rest','ok','ok');
+INSERT INTO consultation VALUES ('123400002','2008-01-05 00:15:01','ok','ok','ok','ok');
+INSERT INTO consultation VALUES ('123400002','2008-01-06 00:15:01','ok','ok','ok','ok');
+INSERT INTO consultation VALUES ('123400002','2008-01-07 00:15:01','ok','ok','ok','ok');
+
+
 INSERT INTO phone_number_client VALUES ('123456789', 910000000);
 INSERT INTO phone_number_client VALUES ('123456780', 910000001);
 
 
 INSERT INTO permanent_doctor VALUES ('123400000',5);
+INSERT INTO permanent_doctor VALUES ('123400002',5);
 INSERT INTO trainee_doctor VALUES ('123400001','123400000');
 INSERT INTO supervision_report VALUES ('123400001','2008-01-02 00:00:01','insufficient', 4);
 
@@ -287,6 +306,8 @@ INSERT INTO supervision_report VALUES ('123400002','2008-01-02 00:00:03','good',
 
 INSERT INTO diagnostic_code VALUES ('ICD-10-CM', 'He is a dead men'); 
 INSERT INTO diagnostic_code VALUES ('ICD-00-CM', 'He is  a zombie'); 
+INSERT INTO diagnostic_code VALUES ('ICD-2-CM', 'dental cavities'); 
+INSERT INTO diagnostic_code VALUES ('ICD-1-CM', 'infectious disease'); 
 
 
 INSERT INTO consultation_diagnostic VALUES('123400000','2008-01-02 00:00:01','ICD-10-CM');
@@ -297,8 +318,13 @@ INSERT INTO consultation_diagnostic VALUES('123400000','2008-01-01 00:00:15','IC
 INSERT INTO consultation_diagnostic VALUES('123400000','2008-01-05 00:15:01','ICD-00-CM');
 INSERT INTO consultation_diagnostic VALUES('123400000','2008-01-06 00:15:01','ICD-00-CM');
 INSERT INTO consultation_diagnostic VALUES('123400000','2008-01-07 00:15:01','ICD-00-CM');
- 
 
+INSERT INTO consultation_diagnostic VALUES('123400002','2008-01-04 00:15:01','ICD-2-CM');
+INSERT INTO consultation_diagnostic VALUES('123400002','2008-01-05 00:15:01','ICD-2-CM');
+INSERT INTO consultation_diagnostic VALUES('123400002','2008-01-06 00:15:01','ICD-2-CM');
+INSERT INTO consultation_diagnostic VALUES('123400002','2008-01-07 00:15:01','ICD-1-CM');
+
+ 
 INSERT INTO medication VALUES ('cacao' , 'choc');
 INSERT INTO medication VALUES ('nutela' , 'choc');
 INSERT INTO medication VALUES ('cacao' , 'kinder');
@@ -311,6 +337,15 @@ INSERT INTO prescription VALUES ('cacao','choc','123400000','2008-01-01 00:00:15
 INSERT INTO prescription VALUES ('cacao','choc','123400000','2008-01-05 00:15:01','ICD-00-CM','1L','All in your vein');
 INSERT INTO prescription VALUES ('cacao','choc','123400000','2008-01-06 00:15:01','ICD-00-CM','1L','All in your vein');
 INSERT INTO prescription VALUES ('nutela','choc','123400000','2008-01-07 00:15:01','ICD-00-CM','1L','All in your vein');
+
+
+INSERT INTO prescription VALUES ('cacao','choc','123400002','2008-01-04 00:15:01','ICD-2-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','kinder','123400002','2008-01-05 00:15:01','ICD-2-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400002','2008-01-06 00:15:01','ICD-2-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('nutela','choc','123400002','2008-01-07 00:15:01','ICD-1-CM','1L','All in your vein');
+
+
+
 
 
 
