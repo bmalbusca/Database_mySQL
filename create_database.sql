@@ -254,11 +254,11 @@ INSERT INTO client VALUES ('123456789','John','1985-02-07','Av almirante reis','
 INSERT INTO client VALUES ('123456780','Robert','1985-03-07','Av almirante reis','Lisboa', '1000-048','Male',20);
 INSERT INTO client VALUES ('123456781','Charles','1988-03-06','Av almirante reis','Lisboa', '1000-020','Male',25);
 
-INSERT INTO appointment VALUES ('123400000','2008-01-01 00:00:01','Its a bad situation','123456789');
+INSERT INTO appointment VALUES ('123400000','2008-01-01 00:00:15','Its a bad situation','123456789');
 INSERT INTO appointment VALUES ('123400000','2008-01-02 00:00:01','Its a not bad situation','123456780');
 INSERT INTO appointment VALUES ('123400000','2008-01-02 00:15:01','Its a not bad situation','123456780');
 
-INSERT INTO consultation VALUES ('123400000','2008-01-01 00:00:01','not ok','ok','not ok','ok');
+INSERT INTO consultation VALUES ('123400000','2008-01-01 00:00:15','not ok','gingivitis','not ok','ok');
 INSERT INTO consultation VALUES ('123400000','2008-01-02 00:00:01','ok','gingivitis','ok','ok');
 INSERT INTO consultation VALUES ('123400000','2008-01-02 00:15:01','ok','rest','ok','ok');
 
@@ -273,19 +273,21 @@ INSERT INTO supervision_report VALUES ('123400001','2008-01-02 00:00:01','insuff
 
 INSERT INTO trainee_doctor VALUES ('123400002','123400000');
 INSERT INTO supervision_report VALUES ('123400002','2008-01-02 00:00:03','good', 3);
- 
 
 
-SELECT Cl.name, Cl.city, Cl.VAT
-FROM client as Cl
-INNER JOIN(
-		SELECT MAX(A.date_timestamp), A.VAT_client VAT
-		FROM appointment as A NATURAL JOIN consultation as C
-		WHERE C.SOAP_O LIKE '%gingivitis%' OR C.SOAP_O LIKE '%periodontitis%' 
-		GROUP BY A.VAT_client) as Filter
-ON Cl.VAT = Filter.VAT;
+INSERT INTO diagnostic_code VALUES ('ICD-10-CM', 'He is a dead men'); 
+INSERT INTO diagnostic_code VALUES ('ICD-00-CM', 'He is  a zombie'); 
 
 
+INSERT INTO consultation_diagnostic VALUES('123400000','2008-01-02 00:00:01','ICD-10-CM'); 
+INSERT INTO consultation_diagnostic VALUES('123400000','2008-01-01 00:00:15','ICD-00-CM'); 
+
+
+INSERT INTO medication VALUES ('cacao' , 'choc');
+INSERT INTO medication VALUES ('nutela' , 'choc');
+
+INSERT INTO prescription VALUES ('cacao','choc','123400000','2008-01-02 00:00:01','ICD-10-CM','100ml','All in your ass');
+INSERT INTO prescription VALUES ('cacao','choc','123400000','2008-01-01 00:00:15','ICD-00-CM','1L','All in your vein');
 
 
 
