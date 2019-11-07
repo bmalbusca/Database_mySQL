@@ -1,11 +1,9 @@
-SELECT * FROM client
+USE dental_clinic;
 
-
-
-SELECT count (ca.date_timestamp)/count(c.date_timestamp) AS Avg_Assistants
-       count (proc.date_timestamp)/count(c.date_timestamp) AS Avg_Procedures
-       count (codes.date_timestamp)/count(c.date_timestamp) AS Avg_Diagonostic
-       count (presc.date_timestamp)/count(c.date_timestamp) AS Avg_Prescriptions
+SELECT COUNT (ca.date_timestamp)/COUNT(c.date_timestamp) AS Avg_Assistants,
+       COUNT (proc.date_timestamp)/COUNT(c.date_timestamp) AS Avg_Procedures,
+       COUNT (codes.date_timestamp)/COUNT(c.date_timestamp) AS Avg_Diagonostic,
+       COUNT (presc.date_timestamp)/COUNT(c.date_timestamp) AS Avg_Prescriptions
 
 FROM consultation AS c
         LEFT OUTER JOIN consultation_assistant AS ca
@@ -16,4 +14,4 @@ FROM consultation AS c
         ON c.VAT_doctor =  cd.VAT_doctor AND c.date_timestamp = cd.date_timestamp
         LEFT OUTER JOIN prescription AS presc
         ON c.VAT_doctor= presc.VAT_doctor AND c.date_timestamp = presc.date_timestamp
-WHERE year(c.date_timestamp) = 2019
+WHERE EXTRACT(YEAR FROM c.date_timestamp) = 2019;
