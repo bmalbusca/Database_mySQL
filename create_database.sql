@@ -351,7 +351,24 @@ INSERT INTO prescription VALUES ('cacao','kinder','123400002','2019-01-05 00:15:
 INSERT INTO prescription VALUES ('cacao','choc','123400002','2019-01-06 00:15:01','ICD-2-CM','1L','All in your vein');
 INSERT INTO prescription VALUES ('nutela','choc','123400002','2019-01-07 00:15:01','ICD-1-CM','1L','All in your vein');
 
+CREATE VIEW dim_date AS
+SELECT date_timestamp, EXTRACT(DAY from date_timestamp) AS Day, EXTRACT(MONTH from date_timestamp) AS Month , Extract(YEAR from date_timestamp) AS Year
+FROM consultation;
 
+CREATE VIEW dim_client AS
+SELECT c.VAT, c.gender, c.age
+FROM client as c;
+
+CREATE VIEW dim_location_client AS
+SELECT c.zip, c.city
+FROM client as c;
+
+CREATE VIEW facts_consults AS
+SELECT dc.VAT, dd.date_timestamp, dlc.zip, 
+	(select count(proc.date_timestamp) as num from procedure_in_consultation as proc, appointment as a where a.VAT_client = dc.VAT AND a.date_timestamp = dd.date_timestamp) as num_procedures -- , num_medications, num_diagnostic_codes
+FROM dim_client as dc, dim_date as dd, dim_location_client as dlc;
+	
+SELECT * FROM facts_consults;	
 
 
 
