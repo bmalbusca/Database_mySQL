@@ -10,3 +10,12 @@ SELECT E1.name, E1.VAT, E2.name, rp.evaluation, rp.description FROM employee as 
 			NATURAL JOIN supervision_report as rp
 			WHERE E2.VAT = trainee_doctor.supervisor AND  (rp.evaluation <3 OR rp.description  LIKE '%insufficient%')
 			ORDER BY  rp.evaluation DESC;
+
+SELECT Cl.name, Cl.city, Cl.VAT
+FROM client as Cl
+INNER JOIN(
+		SELECT MAX(A.date_timestamp), A.VAT_client VAT
+		FROM appointment as A NATURAL JOIN consultation as C
+		WHERE C.SOAP_O LIKE '%gingivitis%' OR C.SOAP_O LIKE '%periodontitis%' 
+		GROUP BY A.VAT_client) as Filter
+ON Cl.VAT = Filter.VAT;
