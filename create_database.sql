@@ -301,6 +301,7 @@ INSERT INTO consultation_diagnostic VALUES('123400000','2008-01-07 00:15:01','IC
 
 INSERT INTO medication VALUES ('cacao' , 'choc');
 INSERT INTO medication VALUES ('nutela' , 'choc');
+INSERT INTO medication VALUES ('cacao' , 'kinder');
 
 INSERT INTO prescription VALUES ('cacao','choc','123400000','2008-01-02 00:00:01','ICD-10-CM','100ml','All in your ass');
 INSERT INTO prescription VALUES ('nutela','choc','123400000','2008-01-02 00:15:01','ICD-10-CM','1L','All in your vein');
