@@ -279,11 +279,11 @@ INSERT INTO diagnostic_code VALUES ('ICD-00-CM', 'He is  a zombie');
 INSERT INTO consultation_diagnostic VALUES('123400000','2008-01-02 00:00:01','ICD-10-CM'); 
 INSERT INTO consultation_diagnostic VALUES('123400000','2008-01-01 00:00:15','ICD-00-CM'); 
 
-
+INSERT INTO medication VALUES ('cacao' , 'kinder');
 INSERT INTO medication VALUES ('cacao' , 'choc');
 INSERT INTO medication VALUES ('nutela' , 'choc');
 
-INSERT INTO prescription VALUES ('cacao','choc','123400000','2008-01-02 00:00:01','ICD-10-CM','100ml','All in your ass');
+INSERT INTO prescription VALUES ('cacao','choc','123400000','2008-01-02 00:00:01','ICD-10-CM','100ml','All in your arm');
 INSERT INTO prescription VALUES ('cacao','choc','123400000','2008-01-01 00:00:15','ICD-00-CM','1L','All in your vein');
 
 
