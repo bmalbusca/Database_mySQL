@@ -41,6 +41,7 @@ CREATE TABLE phone_number_employee(
 	phone varchar(15) NOT NULL,
 	PRIMARY KEY (VAT,phone),
 	FOREIGN KEY (VAT) REFERENCES employee(VAT)
+
 );
 
 CREATE TABLE receptionist (
@@ -56,6 +57,7 @@ CREATE TABLE doctor(
 	email varchar(50) NOT NULL UNIQUE,
 	PRIMARY KEY (VAT),
 	FOREIGN KEY (VAT) REFERENCES employee(VAT)
+	ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE nurse(
@@ -90,17 +92,17 @@ CREATE TABLE permanent_doctor(
 	VAT varchar(14) NOT NULL,
 	years SMALLINT NOT NULL,
 	PRIMARY KEY (VAT),
-	FOREIGN KEY (VAT) REFERENCES doctor(VAT)
+	FOREIGN KEY (VAT) REFERENCES doctor(VAT) ON DELETE CASCADE
 );
 
 CREATE TABLE trainee_doctor(
 	VAT varchar(14) NOT NULL,
 	supervisor varchar(14) NOT NULL,
 	PRIMARY KEY (VAT),
-	FOREIGN KEY (VAT) REFERENCES doctor(VAT),
+	FOREIGN KEY (VAT) REFERENCES doctor(VAT) ON DELETE CASCADE,
 --	KEY doctor_supervisor (supervisor),
 --  CONSTRAINT doctor_supervisor FOREIGN KEY (supervisor) REFERENCES permanent_doctor(VAT)
-	FOREIGN KEY (supervisor) REFERENCES doctor(VAT)
+	FOREIGN KEY (supervisor) REFERENCES doctor(VAT) ON DELETE CASCADE
 
 );
 
@@ -110,8 +112,8 @@ CREATE TABLE supervision_report(
 	date_timestamp TIMESTAMP NOT NULL,
 	description TEXT NOT NULL,
 	evaluation SMALLINT NOT NULL CHECK (evaluation >=1 AND evaluation <=5 ),
-	PRIMARY KEY (VAT,date_timestamp),
-	FOREIGN KEY (VAT) REFERENCES trainee_doctor(VAT)
+	PRIMARY KEY (VAT,date_timestamp) ,
+	FOREIGN KEY (VAT) REFERENCES trainee_doctor(VAT) ON DELETE CASCADE
 );
 
 
@@ -120,9 +122,9 @@ CREATE TABLE appointment(
 	date_timestamp TIMESTAMP NOT NULL,
 	description varchar(255) NOT NULL,
 	VAT_client varchar(14) NOT NULL,
-	PRIMARY KEY (VAT_doctor, date_timestamp),
-	FOREIGN KEY (VAT_doctor) REFERENCES doctor(VAT),
-	FOREIGN KEY (VAT_client) REFERENCES client(VAT)
+	PRIMARY KEY (VAT_doctor, date_timestamp) ,
+	FOREIGN KEY (VAT_doctor) REFERENCES doctor(VAT) ON DELETE CASCADE,
+	FOREIGN KEY (VAT_client) REFERENCES client(VAT) ON DELETE CASCADE
 );
 
 
@@ -134,8 +136,9 @@ CREATE TABLE consultation(
 	SOAP_O TEXT NOT NULL,
 	SOAP_A TEXT NOT NULL,
 	SOAP_P TEXT NOT NULL,
-	PRIMARY KEY (VAT_doctor,date_timestamp),
+	PRIMARY KEY (VAT_doctor,date_timestamp) ,
 	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES appointment(VAT_doctor,date_timestamp)
+	ON DELETE CASCADE
 );
 
 
@@ -145,8 +148,9 @@ CREATE TABLE consultation_assistant(
 	date_timestamp TIMESTAMP NOT NULL,
 	VAT_nurse varchar(14) NOT NULL,
 	PRIMARY KEY (VAT_doctor, date_timestamp),
-	FOREIGN KEY (VAT_nurse) REFERENCES nurse(VAT),
+	FOREIGN KEY (VAT_nurse) REFERENCES nurse(VAT) ON DELETE CASCADE,
 	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation(VAT_doctor,date_timestamp)
+	ON DELETE CASCADE
 );
 
 CREATE TABLE diagnostic_code(
@@ -171,8 +175,8 @@ CREATE TABLE consultation_diagnostic(
 	date_timestamp TIMESTAMP  NOT NULL,
 	ID varchar(14) NOT NULL,
 	PRIMARY KEY (VAT_doctor,date_timestamp, ID),
-	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation(VAT_doctor,date_timestamp),
-	FOREIGN KEY (ID) REFERENCES diagnostic_code(ID)
+	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation(VAT_doctor,date_timestamp) ON DELETE CASCADE,
+	FOREIGN KEY (ID) REFERENCES diagnostic_code(ID) ON DELETE CASCADE
 );
 
 CREATE TABLE medication(
@@ -190,8 +194,9 @@ CREATE TABLE prescription(
 	dosage varchar(255),
 	description varchar(255),
 	PRIMARY KEY (name,lab,VAT_doctor,date_timestamp,ID),
-	FOREIGN KEY (VAT_doctor,date_timestamp, ID) REFERENCES consultation_diagnostic(VAT_doctor,date_timestamp,ID),
-	FOREIGN KEY (name,lab) REFERENCES medication(name,lab)
+	FOREIGN KEY (VAT_doctor,date_timestamp, ID) REFERENCES consultation_diagnostic(VAT_doctor,date_timestamp,ID)
+	ON DELETE CASCADE,
+	FOREIGN KEY (name,lab) REFERENCES medication(name,lab) ON DELETE CASCADE
 );
 
 CREATE TABLE `procedure`(
@@ -206,8 +211,8 @@ CREATE TABLE procedure_in_consultation(
 	date_timestamp TIMESTAMP NOT NULL,
 	description varchar(255) NOT NULL,
 	PRIMARY KEY (name,VAT_doctor,date_timestamp),
-	FOREIGN KEY (name) REFERENCES `procedure`(name),
-	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation(VAT_doctor,date_timestamp)
+	FOREIGN KEY (name) REFERENCES `procedure`(name) ON DELETE CASCADE,
+	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation(VAT_doctor,date_timestamp) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE procedure_radiology(
@@ -216,7 +221,7 @@ CREATE TABLE procedure_radiology(
 	VAT_doctor varchar(14) NOT NULL,
 	date_timestamp TIMESTAMP NOT NULL,
 	PRIMARY KEY (name,file, VAT_doctor, date_timestamp),
-	FOREIGN KEY (name,VAT_doctor, date_timestamp) REFERENCES procedure_in_consultation(name,VAT_doctor, date_timestamp)
+	FOREIGN KEY (name,VAT_doctor, date_timestamp) REFERENCES procedure_in_consultation(name,VAT_doctor, date_timestamp) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE teeth(
@@ -235,8 +240,9 @@ CREATE TABLE procedure_charting(
 	`desc` varchar(255) NOT NULL,
 	measure decimal(4,2),
 	PRIMARY KEY (name,VAT,date_timestamp,quadrant,number),
-	FOREIGN KEY (name,VAT, date_timestamp) REFERENCES procedure_in_consultation(name,VAT_doctor, date_timestamp),
-	FOREIGN KEY(quadrant,number) REFERENCES teeth(quadrant,number)
+	FOREIGN KEY (name,VAT, date_timestamp) REFERENCES procedure_in_consultation(name,VAT_doctor, date_timestamp)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(quadrant,number) REFERENCES teeth(quadrant,number)ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
@@ -276,7 +282,6 @@ INSERT INTO appointment VALUES ('123400002','2019-01-06 00:15:01','Its a not bad
 INSERT INTO appointment VALUES ('123400002','2019-01-07 00:15:01','Its a not bad situation','123456781');
 
 
-
 INSERT INTO appointment VALUES ('123400000','2019-01-08 00:15:01','Its a not bad situation','123456781');
 
 
@@ -307,12 +312,10 @@ INSERT INTO supervision_report VALUES ('123400001','2019-01-02 00:00:01','insuff
 INSERT INTO trainee_doctor VALUES ('123400002','123400000');
 INSERT INTO supervision_report VALUES ('123400002','2019-01-02 00:00:03','good', 3);
 
-
 INSERT INTO diagnostic_code VALUES ('ICD-10-CM', 'He is a dead men');
 INSERT INTO diagnostic_code VALUES ('ICD-00-CM', 'He is  a zombie');
 INSERT INTO diagnostic_code VALUES ('ICD-2-CM', 'dental cavities');
 INSERT INTO diagnostic_code VALUES ('ICD-1-CM', 'infectious disease');
-
 
 INSERT INTO consultation_diagnostic VALUES('123400000','2019-01-02 00:00:01','ICD-10-CM');
 INSERT INTO consultation_diagnostic VALUES('123400000','2019-01-02 00:15:01','ICD-10-CM');
@@ -322,11 +325,42 @@ INSERT INTO consultation_diagnostic VALUES('123400000','2019-01-01 00:00:15','IC
 INSERT INTO consultation_diagnostic VALUES('123400000','2019-01-05 00:15:01','ICD-00-CM');
 INSERT INTO consultation_diagnostic VALUES('123400000','2019-01-06 00:15:01','ICD-00-CM');
 INSERT INTO consultation_diagnostic VALUES('123400000','2019-01-07 00:15:01','ICD-00-CM');
-
 INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-04 00:15:01','ICD-2-CM');
 INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-05 00:15:01','ICD-2-CM');
 INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-06 00:15:01','ICD-2-CM');
 INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-07 00:15:01','ICD-1-CM');
+
+INSERT INTO medication VALUES ('cacao' , 'choc');
+INSERT INTO medication VALUES ('nutela' , 'choc');
+INSERT INTO medication VALUES ('cacao' , 'kinder');
+
+INSERT INTO prescription VALUES ('cacao','choc','123400002','2019-01-04 00:15:01','ICD-2-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','kinder','123400002','2019-01-05 00:15:01','ICD-2-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400002','2019-01-06 00:15:01','ICD-2-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('nutela','choc','123400002','2019-01-07 00:15:01','ICD-1-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-02 00:00:01','ICD-10-CM','100ml','All in your arm');
+INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-02 00:15:01','ICD-10-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-03 00:15:01','ICD-10-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-04 00:15:01','ICD-10-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-01 00:00:15','ICD-00-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-05 00:15:01','ICD-00-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-06 00:15:01','ICD-00-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-07 00:15:01','ICD-00-CM','1L','All in your vein');
+
+
+/*INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-02 00:00:01','ICD-10-CM','100ml','All in your ass');
+INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-02 00:15:01','ICD-10-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-03 00:15:01','ICD-10-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-04 00:15:01','ICD-10-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-01 00:00:15','ICD-00-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-05 00:15:01','ICD-00-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-06 00:15:01','ICD-00-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-07 00:15:01','ICD-00-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400002','2019-01-04 00:15:01','ICD-2-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','kinder','123400002','2019-01-05 00:15:01','ICD-2-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400002','2019-01-06 00:15:01','ICD-2-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('nutela','choc','123400002','2019-01-07 00:15:01','ICD-1-CM','1L','All in your vein');*/
+
 
 INSERT INTO nurse VALUES ('123419970');
 INSERT INTO nurse VALUES ('123419971');
@@ -340,22 +374,3 @@ INSERT INTO `procedure` VALUES ('raio-x','TIPO3');
 
 INSERT INTO procedure_in_consultation VALUES ('colonoscopia', '123400000', '2019-01-01 00:00:15', 'hard');
 INSERT INTO procedure_in_consultation VALUES ('endoscopia', '123400000', '2019-01-02 00:00:01', 'hard');
-
-INSERT INTO medication VALUES ('cacao' , 'choc');
-INSERT INTO medication VALUES ('nutela' , 'choc');
-INSERT INTO medication VALUES ('cacao' , 'kinder');
-
-INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-02 00:00:01','ICD-10-CM','100ml','All in your ass');
-INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-02 00:15:01','ICD-10-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-03 00:15:01','ICD-10-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-04 00:15:01','ICD-10-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-01 00:00:15','ICD-00-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-05 00:15:01','ICD-00-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-06 00:15:01','ICD-00-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-07 00:15:01','ICD-00-CM','1L','All in your vein');
-
-
-INSERT INTO prescription VALUES ('cacao','choc','123400002','2019-01-04 00:15:01','ICD-2-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('cacao','kinder','123400002','2019-01-05 00:15:01','ICD-2-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('cacao','choc','123400002','2019-01-06 00:15:01','ICD-2-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('nutela','choc','123400002','2019-01-07 00:15:01','ICD-1-CM','1L','All in your vein');

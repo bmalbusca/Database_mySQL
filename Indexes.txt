@@ -1,0 +1,19 @@
+Indexes:
+
+1.
+
+In the where clause we search for equal VAT numbers and a specific doctor named "Jane Sweettooth". To make this search faster we Index only the name column on entity "employee", speeding up the search process by avoiding searching the whole table for every "Jane Sweettooth". This way when the pointer reaches the next record after the last "Jane Sweettooth" it stops searching this table. Similarly, we also create an index in "appointment" to speed up the search for the consults where "Jane Sweettooth" is the doctor.
+
+SQL:
+
+CREATE INDEX IX_EmployeeName ON employee(name);
+
+CREATE INDEX IX_AppointmentVAT_doctor ON appointment(VAT_doctor);
+
+
+
+2.
+
+Using an Index on the "supervision_report" table on the "evaluation" column will make finding the rows where evaluation < 3 faster. 
+
+CREATE INDEX IX_SR_ev ON supervision_report(evaluation);
