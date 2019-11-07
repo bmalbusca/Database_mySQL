@@ -1,9 +1,9 @@
 USE dental_clinic;
 
-SELECT COUNT (ca.date_timestamp)/COUNT(c.date_timestamp) AS Avg_Assistants,
-       COUNT (proc.date_timestamp)/COUNT(c.date_timestamp) AS Avg_Procedures,
-       COUNT (codes.date_timestamp)/COUNT(c.date_timestamp) AS Avg_Diagonostic,
-       COUNT (presc.date_timestamp)/COUNT(c.date_timestamp) AS Avg_Prescriptions
+SELECT COUNT(ca.date_timestamp)/COUNT(c.date_timestamp) AS Avg_Assistants,
+       COUNT(proc.date_timestamp)/COUNT(c.date_timestamp) AS Avg_Procedures,
+       COUNT(cd.date_timestamp)/COUNT(c.date_timestamp) AS Avg_Diagonostic,
+       COUNT(presc.date_timestamp)/COUNT(c.date_timestamp) AS Avg_Prescriptions
 
 FROM consultation AS c
         LEFT OUTER JOIN consultation_assistant AS ca
