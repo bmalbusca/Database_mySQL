@@ -7,3 +7,4 @@ SELECT C.ID,C.description, COUNT(distinct C.name,C.lab) as cnt FROM
 GROUP BY C.ID
 ORDER BY cnt ASC;
 
+
