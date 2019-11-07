@@ -1,11 +1,9 @@
-SELECT count (n.date_timestamp)/count(c.date_timestamp) as Avg_Assistants
-       count (n.date_timestamp)/count(c.date_timestamp) as Avg_Nurses
-       count (n.date_timestamp)/count(c.date_timestamp) as Avg_Procedures
-       count (n.date_timestamp)/count(c.date_timestamp) as Avg_Diagonostic_codes
-       count (n.date_timestamp)/count(c.date_timestamp) as Avg_Prescriptions
+USE dental_clinic; 
+
+SELECT C.ID,C.description, COUNT(distinct C.name,C.lab) FROM
+	(SELECT dc.ID, dc.description, p.name , p.lab  FROM diagnostic_code dc 
+	LEFT OUTER JOIN  (SELECT * FROM prescription) as p
+	ON dc.ID = p.ID) AS C
+GROUP BY C.ID;
 
 
-
-SELECT AVG(nurses, consultation_assistant, procedures, diagnostic codes, prescriptions) FROM consultations
-FROM table_name
-WHERE ;
