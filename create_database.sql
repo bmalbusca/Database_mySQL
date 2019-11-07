@@ -348,20 +348,6 @@ INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-06 00:15:01
 INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-07 00:15:01','ICD-00-CM','1L','All in your vein');
 
 
-/*INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-02 00:00:01','ICD-10-CM','100ml','All in your ass');
-INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-02 00:15:01','ICD-10-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-03 00:15:01','ICD-10-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-04 00:15:01','ICD-10-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-01 00:00:15','ICD-00-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-05 00:15:01','ICD-00-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-06 00:15:01','ICD-00-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-07 00:15:01','ICD-00-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('cacao','choc','123400002','2019-01-04 00:15:01','ICD-2-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('cacao','kinder','123400002','2019-01-05 00:15:01','ICD-2-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('cacao','choc','123400002','2019-01-06 00:15:01','ICD-2-CM','1L','All in your vein');
-INSERT INTO prescription VALUES ('nutela','choc','123400002','2019-01-07 00:15:01','ICD-1-CM','1L','All in your vein');*/
-
-
 INSERT INTO nurse VALUES ('123419970');
 INSERT INTO nurse VALUES ('123419971');
 
@@ -372,5 +358,5 @@ INSERT INTO `procedure` VALUES ('colonoscopia','TIPO1');
 INSERT INTO `procedure` VALUES ('endoscopia','TIPO2');
 INSERT INTO `procedure` VALUES ('raio-x','TIPO3');
 
-INSERT INTO procedure_in_consultation VALUES ('colonoscopia', '123400000', '2019-01-01 00:00:15', 'hard');
+INSERT INTO procedure_in_consultation VALUES ('colonoscopia', '123400002','2019-01-04 00:15:01', 'hard');
 INSERT INTO procedure_in_consultation VALUES ('endoscopia', '123400000', '2019-01-02 00:00:01', 'hard');
