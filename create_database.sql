@@ -357,12 +357,13 @@ INSERT INTO `procedure` VALUES ('colonoscopia','TIPO1');
 INSERT INTO `procedure` VALUES ('endoscopia','TIPO2');
 INSERT INTO `procedure` VALUES ('raio-x','TIPO3');
 
+
 INSERT INTO procedure_in_consultation VALUES ('colonoscopia', '123400000', '2019-01-02 00:00:01', 'hard');
 INSERT INTO procedure_in_consultation VALUES ('endoscopia', '123400000', '2019-01-07 00:15:01', 'hard');
 
 
 
-
+/*
 CREATE VIEW dim_date AS
 SELECT date_timestamp, EXTRACT(DAY from date_timestamp) AS Day, EXTRACT(MONTH from date_timestamp) AS Month , Extract(YEAR from date_timestamp) AS Year
 FROM consultation;
@@ -400,7 +401,7 @@ SELECT final.VAT_client, final.date_timestamp, final.zip, COALESCE(final.num_pro
 		SELECT zip, VAT FROM client) as z4
 		ON z4.VAT = a.VAT_client)as final;
 		
-
+*/
 
 
 		
@@ -412,5 +413,4 @@ SELECT final.VAT_client, final.date_timestamp, final.zip, COALESCE(final.num_pro
 -- SELECT * FROM facts_consults;	
 
 -- (select count(proc.date_timestamp) from appointment as a JOIN procedure_in_consultation as proc ON a.date_timestamp = proc.date_timestamp WHERE a.date_timestamp = dd.date_timestamp AND a.VAT_client = dc.VAT GROUP BY dd.date_timestamp) as num_procedures -- , num_medications, num_diagnostic_codes
-
 
