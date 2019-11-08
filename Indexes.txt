@@ -14,6 +14,6 @@ CREATE INDEX IX_AppointmentVAT_doctor ON appointment(VAT_doctor);
 
 2.
 
-Using an Index on the "supervision_report" table on the "evaluation" column will make finding the rows where evaluation < 3 faster. 
+Using an Index on the "supervision_report" table on the "evaluation" column will make finding the rows where evaluation is less than 3 faster. 
 
 CREATE INDEX IX_SR_ev ON supervision_report(evaluation);
