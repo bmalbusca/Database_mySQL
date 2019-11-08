@@ -124,7 +124,7 @@ CREATE TABLE appointment(
 	VAT_client varchar(14) NOT NULL,
 	PRIMARY KEY (VAT_doctor, date_timestamp) ,
 	FOREIGN KEY (VAT_doctor) REFERENCES doctor(VAT) ON DELETE CASCADE,
-	FOREIGN KEY (VAT_client) REFERENCES client(VAT) ON DELETE CASCADE
+	FOREIGN KEY (VAT_client) REFERENCES client(VAT) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
@@ -138,7 +138,7 @@ CREATE TABLE consultation(
 	SOAP_P TEXT NOT NULL,
 	PRIMARY KEY (VAT_doctor,date_timestamp) ,
 	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES appointment(VAT_doctor,date_timestamp)
-	ON DELETE CASCADE
+	ON UPDATE CASCADE  ON DELETE CASCADE
 );
 
 
@@ -175,8 +175,8 @@ CREATE TABLE consultation_diagnostic(
 	date_timestamp TIMESTAMP  NOT NULL,
 	ID varchar(14) NOT NULL,
 	PRIMARY KEY (VAT_doctor,date_timestamp, ID),
-	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation(VAT_doctor,date_timestamp) ON DELETE CASCADE,
-	FOREIGN KEY (ID) REFERENCES diagnostic_code(ID) ON DELETE CASCADE
+	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation(VAT_doctor,date_timestamp) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (ID) REFERENCES diagnostic_code(ID) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE medication(
@@ -362,8 +362,6 @@ INSERT INTO procedure_in_consultation VALUES ('colonoscopia', '123400000', '2019
 INSERT INTO procedure_in_consultation VALUES ('endoscopia', '123400000', '2019-01-07 00:15:01', 'hard');
 
 
-
-/*
 CREATE VIEW dim_date AS
 SELECT date_timestamp, EXTRACT(DAY from date_timestamp) AS Day, EXTRACT(MONTH from date_timestamp) AS Month , Extract(YEAR from date_timestamp) AS Year
 FROM consultation;
@@ -375,42 +373,3 @@ FROM client as c;
 CREATE VIEW dim_location_client AS
 SELECT c.zip, c.city
 FROM client as c;
-
-CREATE VIEW facts_consults AS
-SELECT final.VAT_client, final.date_timestamp, final.zip, COALESCE(final.num_procedures,0) as 'num_procedures', COALESCE(final.num_medications,0) as 'num_medications', COALESCE(final.num_diagnostic_codes,0) as 'num_diagnostic_codes' FROM (
-	SELECT a.VAT_client,a.date_timestamp,z4.zip, z1.num_procedures, z2.num_medications,z3.num_diagnostic_codes FROM consultation as c LEFT OUTER JOIN appointment as a ON c.date_timestamp = a.date_timestamp AND c.VAT_doctor = a.VAT_doctor
-		LEFT OUTER JOIN(
-		SELECT ap.VAT_client, ap.VAT_doctor, ap.date_timestamp, ct.cnt as 'num_procedures' FROM appointment as ap JOIN  (
-			SELECT pc.VAT_doctor,pc.date_timestamp, COUNT(distinct pc.VAT_doctor,pc.date_timestamp) as cnt FROM procedure_in_consultation  as pc
-					GROUP BY pc.VAT_doctor,pc.date_timestamp) as ct
-					ON ct.VAT_doctor=ap.VAT_doctor AND ct.date_timestamp=ap.date_timestamp) as z1
-				ON z1.date_timestamp = a.date_timestamp AND z1.VAT_doctor = a.VAT_doctor
-		LEFT OUTER JOIN(			
-		SELECT ap.VAT_client, ap.VAT_doctor, ap.date_timestamp, ct.cnt as 'num_medications' FROM appointment as ap JOIN  (
-			SELECT pres.ID, pres.VAT_doctor, pres.date_timestamp, COUNT(distinct pres.ID, pres.VAT_doctor,pres.date_timestamp) as cnt FROM prescription  as pres
-					GROUP BY pres.ID, pres.VAT_doctor, pres.date_timestamp) as ct
-					ON ct.VAT_doctor=ap.VAT_doctor AND ct.date_timestamp=ap.date_timestamp) as z2
-				ON 	z2.date_timestamp = a.date_timestamp AND z2.VAT_doctor = a.VAT_doctor
-		LEFT OUTER JOIN(		
-		SELECT ap.VAT_client, ap.VAT_doctor, ap.date_timestamp, ct.cnt as 'num_diagnostic_codes' FROM appointment as ap JOIN  (
-			SELECT cd.VAT_doctor, cd.date_timestamp, COUNT(distinct cd.VAT_doctor,cd.date_timestamp) as cnt FROM consultation_diagnostic  as cd
-					GROUP BY cd.VAT_doctor, cd.date_timestamp) as ct
-					ON ct.VAT_doctor=ap.VAT_doctor AND ct.date_timestamp=ap.date_timestamp) as z3
-				ON 	z3.date_timestamp = a.date_timestamp AND z3.VAT_doctor = a.VAT_doctor
-		LEFT OUTER JOIN(
-		SELECT zip, VAT FROM client) as z4
-		ON z4.VAT = a.VAT_client)as final;
-		
-*/
-
-
-		
-
-
--- CREATE VIEW facts_consults AS
--- SELECT * FROM  procedure_in_consultation as pc LEFT OUTER JOIN consultation as c  ON pc.VAT_doctor = c.VAT_doctor AND 
-	
--- SELECT * FROM facts_consults;	
-
--- (select count(proc.date_timestamp) from appointment as a JOIN procedure_in_consultation as proc ON a.date_timestamp = proc.date_timestamp WHERE a.date_timestamp = dd.date_timestamp AND a.VAT_client = dc.VAT GROUP BY dd.date_timestamp) as num_procedures -- , num_medications, num_diagnostic_codes
-
