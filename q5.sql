@@ -6,5 +6,3 @@ FROM	(SELECT dc.ID, dc.description, p.name , p.lab
 								ON 	dc.ID = p.ID) AS C
 GROUP BY C.ID
 ORDER BY cnt ASC;
-
-

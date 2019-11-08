@@ -1,3 +1,5 @@
+USE `dental_clinic`;
+
 SELECT 	res.name, res.lab, res.description 
 FROM 	(SELECT t.name, t.lab, t.description 
 		FROM	(SELECT pc.ID, pc.name, pc.lab, dc.description 
@@ -19,11 +21,3 @@ HAVING 	(res.name , res.lab) not IN (
 				GROUP BY  pc.ID,pc.name,pc.lab ) as t
 		WHERE  t.description  LIKE '%infectious disease%')
 ORDER BY res.name ASC;
-   
-	
-   
-
-
-
-
-

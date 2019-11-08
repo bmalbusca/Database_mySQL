@@ -8,17 +8,3 @@ WHERE appointment.VAT_client = client.VAT AND
 				FROM 	consultation as c 	LEFT OUTER JOIN appointment as a
 											ON 	c.VAT_doctor = a.VAT_doctor AND
 												c.date_timestamp = a.date_timestamp);
-            
-    
-    
-          
-        
- 
-    
-  
-   
-
-  
-
-
-   

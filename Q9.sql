@@ -1,3 +1,5 @@
+USE `dental_clinic`;
+
 SELECT 	client.name, client.street, client.city, client.zip 
 FROM	client
 WHERE 	client.VAT 	NOT IN 	(SELECT ref.VAT 

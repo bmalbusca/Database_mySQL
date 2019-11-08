@@ -1,3 +1,5 @@
+USE `dental_clinic`;
+
 SELECT	DC.ID, (SELECT filter.nome 
 				FROM 	(SELECT COUNT(P.name) as num, P.name as nome 
 						FROM prescription as P 

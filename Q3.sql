@@ -1,3 +1,5 @@
+USE `dental_clinic`;
+
 SELECT Cl.name, Cl.city, Cl.VAT FROM client as Cl, 
 	(SELECT con.SOAP_O, res.VAT_client FROM consultation as con 
 		JOIN
