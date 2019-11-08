@@ -253,35 +253,36 @@ INSERT INTO employee VALUES ('123400001','Steve Aoki','1985-02-07','Av almirante
 INSERT INTO employee VALUES ('123400002','Peter','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013021',4000);
 INSERT INTO employee VALUES ('123419970','Manuela','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013023',4000);
 INSERT INTO employee VALUES ('123419971','Lyonce','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013022',4000);
-
-
-
+INSERT INTO employee VALUES ('123419972','Manuela','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013024',4000);
+INSERT INTO employee VALUES ('123419973','Lyonce','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013025',4000);
+INSERT INTO employee VALUES ('123419974','Manuela','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013026',4000);
 
 INSERT INTO doctor VALUES ('123400000','Dentist','Is a good guy','jane@tecnico.ulisboa.pt');
 INSERT INTO doctor VALUES ('123400001','Dentist','Is a good guy 2','steve@tecnico.ulisboa.pt');
 INSERT INTO doctor VALUES ('123400002','Dentist','Is a good guy 3','peter@tecnico.ulisboa.pt');
 
-INSERT INTO client VALUES ('123456789','John','1985-02-07','Av almirante reis','Lisboa', '1000-000','Male',40);
-INSERT INTO client VALUES ('123456780','Robert','1985-03-07','Av almirante reis','Lisboa', '1000-048','Male',20);
-INSERT INTO client VALUES ('123456781','Charles','1988-03-06','Av almirante reis','Lisboa', '1000-020','Male',25);
-INSERT INTO client VALUES ('123456782','LeBron','1988-03-06','Av almirante reis','Lisboa', '1000-020','Male',25);
+INSERT INTO client VALUES ('123456789','John','2018-02-07','Av almirante reis','Lisboa', '1000-000','Male',45);
+INSERT INTO client VALUES ('123456780','Robert','2017-03-07','Av almirante reis','Lisboa', '1000-048','Male',18);
+INSERT INTO client VALUES ('123456781','Charles','1960-03-06','Av almirante reis','Lisboa', '1000-020','Male',15);
+INSERT INTO client VALUES ('123456782','LeBron','1965-03-06','Av almirante reis','Lisboa', '1000-020','Male',17);
+
+INSERT INTO client VALUES ('123456790','John','2018-02-07','Av almirante reis','Lisboa', '1000-000','Male',35);
+INSERT INTO client VALUES ('123456791','Robert','2017-03-07','Av almirante reis','Lisboa', '1000-048','Male',26);
+INSERT INTO client VALUES ('123456792','Charles','1960-03-06','Av almirante reis','Lisboa', '1000-020','Male',12);
+INSERT INTO client VALUES ('123456793','LeBron','1965-03-06','Av almirante reis','Lisboa', '1000-020','Male',11);
 
 INSERT INTO appointment VALUES ('123400000','2019-01-01 00:00:15','Its a bad situation','123456789');
-INSERT INTO appointment VALUES ('123400000','2019-01-02 00:00:01','Its a not bad situation','123456780');
-INSERT INTO appointment VALUES ('123400000','2019-01-02 00:15:01','Its a not bad situation','123456780');
-INSERT INTO appointment VALUES ('123400000','2019-01-03 00:15:01','Its a not bad situation','123456780');
-INSERT INTO appointment VALUES ('123400000','2019-01-04 00:15:01','Its a not bad situation','123456780');
+INSERT INTO appointment VALUES ('123400000','2019-01-02 00:00:01','Its a not bad situation','123456790');
+INSERT INTO appointment VALUES ('123400000','2019-01-02 00:15:01','Its a not bad situation','123456791');
+INSERT INTO appointment VALUES ('123400000','2019-01-03 00:15:01','Its a not bad situation','123456792');
+INSERT INTO appointment VALUES ('123400000','2019-01-04 00:15:01','Its a not bad situation','123456793');
 INSERT INTO appointment VALUES ('123400000','2019-01-05 00:15:01','Its a not bad situation','123456780');
 INSERT INTO appointment VALUES ('123400000','2019-01-06 00:15:01','Its a not bad situation','123456780');
-
 INSERT INTO appointment VALUES ('123400000','2019-01-07 00:15:01','Its a not bad situation','123456781');
-
 INSERT INTO appointment VALUES ('123400002','2019-01-04 00:15:01','Its a not bad situation','123456789');
 INSERT INTO appointment VALUES ('123400002','2019-01-05 00:15:01','Its a not bad situation','123456780');
 INSERT INTO appointment VALUES ('123400002','2019-01-06 00:15:01','Its a not bad situation','123456780');
 INSERT INTO appointment VALUES ('123400002','2019-01-07 00:15:01','Its a not bad situation','123456781');
-
-
 INSERT INTO appointment VALUES ('123400000','2019-01-08 00:15:01','Its a not bad situation','123456781');
 
 
@@ -316,6 +317,8 @@ INSERT INTO diagnostic_code VALUES ('ICD-10-CM', 'He is a dead men');
 INSERT INTO diagnostic_code VALUES ('ICD-00-CM', 'He is  a zombie');
 INSERT INTO diagnostic_code VALUES ('ICD-2-CM', 'dental cavities');
 INSERT INTO diagnostic_code VALUES ('ICD-1-CM', 'infectious disease');
+INSERT INTO diagnostic_code VALUES ('ICD-4-CM', 'infectious disease');
+
 
 INSERT INTO consultation_diagnostic VALUES('123400000','2019-01-02 00:00:01','ICD-10-CM');
 INSERT INTO consultation_diagnostic VALUES('123400000','2019-01-02 00:15:01','ICD-10-CM');
@@ -329,6 +332,10 @@ INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-04 00:15:01','IC
 INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-05 00:15:01','ICD-2-CM');
 INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-06 00:15:01','ICD-2-CM');
 INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-07 00:15:01','ICD-1-CM');
+INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-07 00:15:01','ICD-2-CM');
+INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-07 00:15:01','ICD-00-CM');
+INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-07 00:15:01','ICD-10-CM');
+
 
 INSERT INTO medication VALUES ('cacao' , 'choc');
 INSERT INTO medication VALUES ('nutela' , 'choc');
@@ -374,3 +381,5 @@ INSERT INTO `procedure` VALUES ('raio-x','TIPO3');
 
 INSERT INTO procedure_in_consultation VALUES ('colonoscopia', '123400000', '2019-01-01 00:00:15', 'hard');
 INSERT INTO procedure_in_consultation VALUES ('endoscopia', '123400000', '2019-01-02 00:00:01', 'hard');
+INSERT INTO procedure_in_consultation VALUES ('raio-x', '123400000', '2019-01-04 00:15:01', 'hard');
+INSERT INTO procedure_in_consultation VALUES ('endoscopia', '123400002', '2019-01-07 00:15:01', 'hard');
