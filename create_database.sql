@@ -312,7 +312,7 @@ INSERT INTO trainee_doctor VALUES ('123400002','123400000');
 INSERT INTO supervision_report VALUES ('123400002','2019-01-02 00:00:03','good', 3);
 
 INSERT INTO diagnostic_code VALUES ('ICD-10-CM', 'He is a dead men');
-INSERT INTO diagnostic_code VALUES ('ICD-00-CM', 'He is  a zombie');
+INSERT INTO diagnostic_code VALUES ('ICD-00-CM', 'gingivitis');
 INSERT INTO diagnostic_code VALUES ('ICD-2-CM', 'dental cavities');
 INSERT INTO diagnostic_code VALUES ('ICD-1-CM', 'infectious disease');
 
@@ -361,6 +361,8 @@ INSERT INTO `procedure` VALUES ('raio-x','TIPO3');
 INSERT INTO procedure_in_consultation VALUES ('colonoscopia', '123400000', '2019-01-02 00:00:01', 'hard');
 INSERT INTO procedure_in_consultation VALUES ('endoscopia', '123400000', '2019-01-07 00:15:01', 'hard');
 
+INSERT INTO  teeth VALUES (4,20,'canino');
+INSERT INTO procedure_charting VALUES('endoscopia', '123400000', '2019-01-07 00:15:01',4,20,'bom', 5 );
 
 CREATE VIEW dim_date AS
 SELECT date_timestamp, EXTRACT(DAY from date_timestamp) AS Day, EXTRACT(MONTH from date_timestamp) AS Month , Extract(YEAR from date_timestamp) AS Year
