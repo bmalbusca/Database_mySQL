@@ -359,4 +359,4 @@ INSERT INTO `procedure` VALUES ('endoscopia','TIPO2');
 INSERT INTO `procedure` VALUES ('raio-x','TIPO3');
 
 INSERT INTO procedure_in_consultation VALUES ('colonoscopia', '123400000','2019-01-07 00:15:01', 'hard');
-INSERT INTO procedure_in_consultation VALUES ('endoscopia', '123400002','2019-01-05 00:15:01', 'hard');
+INSERT INTO procedure_in_consultation VALUES ('colonoscopia', '123400002','2019-01-05 00:15:01', 'hard');
