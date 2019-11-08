@@ -124,7 +124,7 @@ CREATE TABLE appointment(
 	VAT_client varchar(14) NOT NULL,
 	PRIMARY KEY (VAT_doctor, date_timestamp) ,
 	FOREIGN KEY (VAT_doctor) REFERENCES doctor(VAT) ON DELETE CASCADE,
-	FOREIGN KEY (VAT_client) REFERENCES client(VAT) ON DELETE CASCADE
+	FOREIGN KEY (VAT_client) REFERENCES client(VAT) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
@@ -138,7 +138,7 @@ CREATE TABLE consultation(
 	SOAP_P TEXT NOT NULL,
 	PRIMARY KEY (VAT_doctor,date_timestamp) ,
 	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES appointment(VAT_doctor,date_timestamp)
-	ON DELETE CASCADE
+	ON UPDATE CASCADE  ON DELETE CASCADE
 );
 
 
@@ -175,8 +175,8 @@ CREATE TABLE consultation_diagnostic(
 	date_timestamp TIMESTAMP  NOT NULL,
 	ID varchar(14) NOT NULL,
 	PRIMARY KEY (VAT_doctor,date_timestamp, ID),
-	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation(VAT_doctor,date_timestamp) ON DELETE CASCADE,
-	FOREIGN KEY (ID) REFERENCES diagnostic_code(ID) ON DELETE CASCADE
+	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation(VAT_doctor,date_timestamp) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (ID) REFERENCES diagnostic_code(ID) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE medication(
@@ -253,34 +253,36 @@ INSERT INTO employee VALUES ('123400001','Steve Aoki','1985-02-07','Av almirante
 INSERT INTO employee VALUES ('123400002','Peter','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013021',4000);
 INSERT INTO employee VALUES ('123419970','Manuela','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013023',4000);
 INSERT INTO employee VALUES ('123419971','Lyonce','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013022',4000);
-
-
-
+INSERT INTO employee VALUES ('123419972','Manuela','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013024',4000);
+INSERT INTO employee VALUES ('123419973','Lyonce','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013025',4000);
+INSERT INTO employee VALUES ('123419974','Manuela','1985-02-07','Av almirante reis','Lisboa', '1000-001','DE89370400440532013026',4000);
 
 INSERT INTO doctor VALUES ('123400000','Dentist','Is a good guy','jane@tecnico.ulisboa.pt');
 INSERT INTO doctor VALUES ('123400001','Dentist','Is a good guy 2','steve@tecnico.ulisboa.pt');
 INSERT INTO doctor VALUES ('123400002','Dentist','Is a good guy 3','peter@tecnico.ulisboa.pt');
 
-INSERT INTO client VALUES ('123456789','John','1985-02-07','Av almirante reis','Lisboa', '1000-000','Male',40);
-INSERT INTO client VALUES ('123456780','Robert','1985-03-07','Av almirante reis','Lisboa', '1000-048','Male',20);
-INSERT INTO client VALUES ('123456781','Charles','1988-03-06','Av almirante reis','Lisboa', '1000-020','Male',25);
-INSERT INTO client VALUES ('123456782','LeBron','1988-03-06','Av almirante reis','Lisboa', '1000-020','Male',25);
+INSERT INTO client VALUES ('123456789','John','2018-02-07','Av almirante reis','Lisboa', '1000-000','Male',45);
+INSERT INTO client VALUES ('123456780','Robert','2017-03-07','Av almirante reis','Lisboa', '1000-048','Male',18);
+INSERT INTO client VALUES ('123456781','Charles','1960-03-06','Av almirante reis','Lisboa', '1000-020','Male',15);
+INSERT INTO client VALUES ('123456782','LeBron','1965-03-06','Av almirante reis','Lisboa', '1000-020','Male',17);
+
+INSERT INTO client VALUES ('123456790','John','2018-02-07','Av almirante reis','Lisboa', '1000-000','Male',35);
+INSERT INTO client VALUES ('123456791','Robert','2017-03-07','Av almirante reis','Lisboa', '1000-048','Male',26);
+INSERT INTO client VALUES ('123456792','Charles','1960-03-06','Av almirante reis','Lisboa', '1000-020','Male',12);
+INSERT INTO client VALUES ('123456793','LeBron','1965-03-06','Av almirante reis','Lisboa', '1000-020','Male',11);
 
 INSERT INTO appointment VALUES ('123400000','2019-01-01 00:00:15','Its a bad situation','123456789');
-INSERT INTO appointment VALUES ('123400000','2019-01-02 00:00:01','Its a not bad situation','123456780');
-INSERT INTO appointment VALUES ('123400000','2019-01-02 00:15:01','Its a not bad situation','123456780');
-INSERT INTO appointment VALUES ('123400000','2019-01-03 00:15:01','Its a not bad situation','123456780');
-INSERT INTO appointment VALUES ('123400000','2019-01-04 00:15:01','Its a not bad situation','123456780');
+INSERT INTO appointment VALUES ('123400000','2019-01-02 00:00:01','Its a not bad situation','123456790');
+INSERT INTO appointment VALUES ('123400000','2019-01-02 00:15:01','Its a not bad situation','123456791');
+INSERT INTO appointment VALUES ('123400000','2019-01-03 00:15:01','Its a not bad situation','123456792');
+INSERT INTO appointment VALUES ('123400000','2019-01-04 00:15:01','Its a not bad situation','123456793');
 INSERT INTO appointment VALUES ('123400000','2019-01-05 00:15:01','Its a not bad situation','123456780');
 INSERT INTO appointment VALUES ('123400000','2019-01-06 00:15:01','Its a not bad situation','123456780');
 INSERT INTO appointment VALUES ('123400000','2019-01-07 00:15:01','Its a not bad situation','123456781');
-
-INSERT INTO appointment VALUES ('123400002','2019-01-04 00:15:01','Its a not bad situation','123456781');
-INSERT INTO appointment VALUES ('123400002','2019-01-05 00:15:01','Its a not bad situation','123456781');
-INSERT INTO appointment VALUES ('123400002','2019-01-06 00:15:01','Its a not bad situation','123456781');
-INSERT INTO appointment VALUES ('123400002','2019-01-07 00:15:01','Its a not bad situation','123456780');
-
-
+INSERT INTO appointment VALUES ('123400002','2019-01-04 00:15:01','Its a not bad situation','123456789');
+INSERT INTO appointment VALUES ('123400002','2019-01-05 00:15:01','Its a not bad situation','123456780');
+INSERT INTO appointment VALUES ('123400002','2019-01-06 00:15:01','Its a not bad situation','123456780');
+INSERT INTO appointment VALUES ('123400002','2019-01-07 00:15:01','Its a not bad situation','123456781');
 INSERT INTO appointment VALUES ('123400000','2019-01-08 00:15:01','Its a not bad situation','123456781');
 
 
@@ -315,6 +317,8 @@ INSERT INTO diagnostic_code VALUES ('ICD-10-CM', 'He is a dead men');
 INSERT INTO diagnostic_code VALUES ('ICD-00-CM', 'He is  a zombie');
 INSERT INTO diagnostic_code VALUES ('ICD-2-CM', 'dental cavities');
 INSERT INTO diagnostic_code VALUES ('ICD-1-CM', 'infectious disease');
+INSERT INTO diagnostic_code VALUES ('ICD-4-CM', 'infectious disease');
+
 
 INSERT INTO consultation_diagnostic VALUES('123400000','2019-01-02 00:00:01','ICD-10-CM');
 INSERT INTO consultation_diagnostic VALUES('123400000','2019-01-02 00:15:01','ICD-10-CM');
@@ -328,6 +332,10 @@ INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-04 00:15:01','IC
 INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-05 00:15:01','ICD-2-CM');
 INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-06 00:15:01','ICD-2-CM');
 INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-07 00:15:01','ICD-1-CM');
+INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-07 00:15:01','ICD-2-CM');
+INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-07 00:15:01','ICD-00-CM');
+INSERT INTO consultation_diagnostic VALUES('123400002','2019-01-07 00:15:01','ICD-10-CM');
+
 
 INSERT INTO medication VALUES ('cacao' , 'choc');
 INSERT INTO medication VALUES ('nutela' , 'choc');
@@ -347,6 +355,20 @@ INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-06 00:15:01
 INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-07 00:15:01','ICD-00-CM','1L','All in your vein');
 
 
+/*INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-02 00:00:01','ICD-10-CM','100ml','All in your ass');
+INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-02 00:15:01','ICD-10-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-03 00:15:01','ICD-10-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-04 00:15:01','ICD-10-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-01 00:00:15','ICD-00-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-05 00:15:01','ICD-00-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400000','2019-01-06 00:15:01','ICD-00-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('nutela','choc','123400000','2019-01-07 00:15:01','ICD-00-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400002','2019-01-04 00:15:01','ICD-2-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','kinder','123400002','2019-01-05 00:15:01','ICD-2-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('cacao','choc','123400002','2019-01-06 00:15:01','ICD-2-CM','1L','All in your vein');
+INSERT INTO prescription VALUES ('nutela','choc','123400002','2019-01-07 00:15:01','ICD-1-CM','1L','All in your vein');*/
+
+
 INSERT INTO nurse VALUES ('123419970');
 INSERT INTO nurse VALUES ('123419971');
 
@@ -357,60 +379,7 @@ INSERT INTO `procedure` VALUES ('colonoscopia','TIPO1');
 INSERT INTO `procedure` VALUES ('endoscopia','TIPO2');
 INSERT INTO `procedure` VALUES ('raio-x','TIPO3');
 
-
-INSERT INTO procedure_in_consultation VALUES ('colonoscopia', '123400000', '2019-01-02 00:00:01', 'hard');
-INSERT INTO procedure_in_consultation VALUES ('endoscopia', '123400000', '2019-01-07 00:15:01', 'hard');
-
-
-
-/*
-CREATE VIEW dim_date AS
-SELECT date_timestamp, EXTRACT(DAY from date_timestamp) AS Day, EXTRACT(MONTH from date_timestamp) AS Month , Extract(YEAR from date_timestamp) AS Year
-FROM consultation;
-
-CREATE VIEW dim_client AS
-SELECT c.VAT, c.gender, c.age
-FROM client as c;
-
-CREATE VIEW dim_location_client AS
-SELECT c.zip, c.city
-FROM client as c;
-
-CREATE VIEW facts_consults AS
-SELECT final.VAT_client, final.date_timestamp, final.zip, COALESCE(final.num_procedures,0) as 'num_procedures', COALESCE(final.num_medications,0) as 'num_medications', COALESCE(final.num_diagnostic_codes,0) as 'num_diagnostic_codes' FROM (
-	SELECT a.VAT_client,a.date_timestamp,z4.zip, z1.num_procedures, z2.num_medications,z3.num_diagnostic_codes FROM consultation as c LEFT OUTER JOIN appointment as a ON c.date_timestamp = a.date_timestamp AND c.VAT_doctor = a.VAT_doctor
-		LEFT OUTER JOIN(
-		SELECT ap.VAT_client, ap.VAT_doctor, ap.date_timestamp, ct.cnt as 'num_procedures' FROM appointment as ap JOIN  (
-			SELECT pc.VAT_doctor,pc.date_timestamp, COUNT(distinct pc.VAT_doctor,pc.date_timestamp) as cnt FROM procedure_in_consultation  as pc
-					GROUP BY pc.VAT_doctor,pc.date_timestamp) as ct
-					ON ct.VAT_doctor=ap.VAT_doctor AND ct.date_timestamp=ap.date_timestamp) as z1
-				ON z1.date_timestamp = a.date_timestamp AND z1.VAT_doctor = a.VAT_doctor
-		LEFT OUTER JOIN(			
-		SELECT ap.VAT_client, ap.VAT_doctor, ap.date_timestamp, ct.cnt as 'num_medications' FROM appointment as ap JOIN  (
-			SELECT pres.ID, pres.VAT_doctor, pres.date_timestamp, COUNT(distinct pres.ID, pres.VAT_doctor,pres.date_timestamp) as cnt FROM prescription  as pres
-					GROUP BY pres.ID, pres.VAT_doctor, pres.date_timestamp) as ct
-					ON ct.VAT_doctor=ap.VAT_doctor AND ct.date_timestamp=ap.date_timestamp) as z2
-				ON 	z2.date_timestamp = a.date_timestamp AND z2.VAT_doctor = a.VAT_doctor
-		LEFT OUTER JOIN(		
-		SELECT ap.VAT_client, ap.VAT_doctor, ap.date_timestamp, ct.cnt as 'num_diagnostic_codes' FROM appointment as ap JOIN  (
-			SELECT cd.VAT_doctor, cd.date_timestamp, COUNT(distinct cd.VAT_doctor,cd.date_timestamp) as cnt FROM consultation_diagnostic  as cd
-					GROUP BY cd.VAT_doctor, cd.date_timestamp) as ct
-					ON ct.VAT_doctor=ap.VAT_doctor AND ct.date_timestamp=ap.date_timestamp) as z3
-				ON 	z3.date_timestamp = a.date_timestamp AND z3.VAT_doctor = a.VAT_doctor
-		LEFT OUTER JOIN(
-		SELECT zip, VAT FROM client) as z4
-		ON z4.VAT = a.VAT_client)as final;
-		
-*/
-
-
-		
-
-
--- CREATE VIEW facts_consults AS
--- SELECT * FROM  procedure_in_consultation as pc LEFT OUTER JOIN consultation as c  ON pc.VAT_doctor = c.VAT_doctor AND 
-	
--- SELECT * FROM facts_consults;	
-
--- (select count(proc.date_timestamp) from appointment as a JOIN procedure_in_consultation as proc ON a.date_timestamp = proc.date_timestamp WHERE a.date_timestamp = dd.date_timestamp AND a.VAT_client = dc.VAT GROUP BY dd.date_timestamp) as num_procedures -- , num_medications, num_diagnostic_codes
-
+INSERT INTO procedure_in_consultation VALUES ('colonoscopia', '123400000', '2019-01-01 00:00:15', 'hard');
+INSERT INTO procedure_in_consultation VALUES ('endoscopia', '123400000', '2019-01-02 00:00:01', 'hard');
+INSERT INTO procedure_in_consultation VALUES ('raio-x', '123400000', '2019-01-04 00:15:01', 'hard');
+INSERT INTO procedure_in_consultation VALUES ('endoscopia', '123400002', '2019-01-07 00:15:01', 'hard');
