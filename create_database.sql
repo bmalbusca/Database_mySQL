@@ -124,7 +124,7 @@ CREATE TABLE appointment(
 	VAT_client varchar(14) NOT NULL,
 	PRIMARY KEY (VAT_doctor, date_timestamp) ,
 	FOREIGN KEY (VAT_doctor) REFERENCES doctor(VAT) ON DELETE CASCADE,
-	FOREIGN KEY (VAT_client) REFERENCES client(VAT) ON DELETE CASCADE
+	FOREIGN KEY (VAT_client) REFERENCES client(VAT) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
@@ -138,7 +138,7 @@ CREATE TABLE consultation(
 	SOAP_P TEXT NOT NULL,
 	PRIMARY KEY (VAT_doctor,date_timestamp) ,
 	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES appointment(VAT_doctor,date_timestamp)
-	ON DELETE CASCADE
+	ON UPDATE CASCADE  ON DELETE CASCADE
 );
 
 
@@ -175,8 +175,8 @@ CREATE TABLE consultation_diagnostic(
 	date_timestamp TIMESTAMP  NOT NULL,
 	ID varchar(14) NOT NULL,
 	PRIMARY KEY (VAT_doctor,date_timestamp, ID),
-	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation(VAT_doctor,date_timestamp) ON DELETE CASCADE,
-	FOREIGN KEY (ID) REFERENCES diagnostic_code(ID) ON DELETE CASCADE
+	FOREIGN KEY (VAT_doctor,date_timestamp) REFERENCES consultation(VAT_doctor,date_timestamp) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (ID) REFERENCES diagnostic_code(ID) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE medication(
