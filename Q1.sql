@@ -1,6 +1,6 @@
 USE `dental_clinic`;
 
-SELECT	client.name, client.VAT, phone_number_client.phone 
+SELECT	DISTINCT client.name, client.VAT, phone_number_client.phone 
 FROM 	client, phone_number_client ,employee, consultation NATURAL JOIN appointment 
 WHERE 	appointment.VAT_client =  client.VAT   AND
 		employee.VAT = appointment.VAT_doctor AND
