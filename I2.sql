@@ -1,0 +1,1 @@
+CREATE INDEX IX_SR_ev ON supervision_report(evaluation);
